@@ -1,0 +1,138 @@
+{% load static %}
+
+<section class="top-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <div class="contact-number">
+                    <i class="tf-ion-ios-telephone"></i>
+                    <span>0129- 12323-123123</span>
+                </div>
+                <div>
+                    <i style='color:white' class="tf-ion-ios-paperplane-outline"></i>
+                    <span style='color:white'>   @dubbb</span>
+                    </div>
+                    <div>
+                    <i style='color:white' class="tf-ion-android-mail"></i>
+                    <span style='color:white'>Email: hello@example.com</span>
+                    </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <div class="logo text-center ">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static "images/logo.png" %}" width="300px" alt="">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                
+
+                <ul class="top-menu text-right list-inline" style="padding-:10px">
+                   
+
+
+                <ul class="top-menu text-right list-inline">
+                    <li class="dropdown cart-nav dropdown-slide">
+                        <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
+                                class="tf-ion-android-cart"></i> Корзина</a>
+                        <div class="dropdown-menu cart-dropdown">
+                           {% for item in cart %}                  
+                            {% with product=item.product %}
+                            <div class="media">
+                                <a class="pull-left" href="#!">
+                                    <img class="media-object" src="{{product.image.url}}"  alt="" />
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="#!">{{product.title}}</a></h4>
+                                    <div class="cart-price">
+                                        <span>{{item.quantity}} x</span>
+                                        <span>{{item.price}}</span>
+                                    </div>
+                                    <h5><strong>{{item.total_price}}</strong></h5>
+                                </div>
+                                <a href="#!" class="remove"><i class="tf-ion-close"></i></a>
+                            </div>
+                            {% endwith %}
+                          {% endfor %}
+                            <div class="cart-summary">
+                                <span>Итого</span>
+                                <span class="total-price">{{cart.get_total_price}}</span>
+                            </div>
+                            <ul class="text-center cart-buttons">
+                                <li><a href="{% url 'cart_detail' %}" class="btn btn-small">к корзине</a></li>
+                                <li><a href="{% url 'create_order' %}" class="btn btn-small btn-solid-border">заказать</a></li>
+                            </ul>
+                        </div>
+                    </li> 
+
+
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="menu">
+    <nav class="navbar navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <h2 class="menu-title">Main Menu</h2>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse text-center">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown ">
+                        <a href="{% url 'home' %}">Главная</a>
+                    </li>
+                    
+
+
+                    <li class="dropdown ">
+                        <a href="{% url 'category' 'dveri' %}">Каталог</a>
+                    </li>
+
+
+                    <li class="dropdown dropdown-slide">
+                        <a href="{% url 'contact' %}" role="button">Контакты</a>
+                    </li>
+
+                    <li class="dropdown dropdown-slide">
+						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							role="button" aria-haspopup="true" aria-expanded="false">Личный кабинет <span
+								class="tf-ion-ios-arrow-down"></span></a>
+                                {% if user.is_anonymous %}
+						<ul class="dropdown-menu">
+                        <li><a href="{% url 'login' %}">Войти</a></li>
+							<li><a href="{% url 'signin' %}">Регистрация</a></li>
+                            <li><a href="{% url "password_reset" %}">Забыли пароль?</a></li>
+							
+							
+                            
+						</ul>
+                        {% else %}
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'profile' %}">Мои профиль</a></li>
+                             <li><a href="{% url 'profile_update' user.pk %}">Изменить профиль</a></li>
+							<li><a href="{% url "password_change" %}">Изменить пароль</a></li> 
+							<li><a href="{% url 'logout' %}">Выйти</a></li>
+						</ul>
+                        {% endif %}
+					</li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</section>

@@ -1,0 +1,47 @@
+
+{% extends 'index.html' %}
+
+
+
+{% load static %}
+
+
+
+{% block main %}
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <h2 class="text-center">Регистрация аккаунта</h2>
+          <form class="text-left clearfix" action="" method="post">
+            {% csrf_token %}
+            {% for f in form %}
+            <div class="form-group">
+              <input for="{{f.id_for_label }}" {% if f.label == 'Пароль' or f.label == 'Повтор пароля' %}type="password"{% else %} type="text" {% endif %} class="form-control"  placeholder="{{f.label}}" {{f}}
+              
+              <div class="invalid-feedback">
+                {{f.errors}}
+              </div>
+            </div>
+            {% endfor %}
+            <div class="text-center">
+              <button type="submit" class="btn btn-main text-center">Зарегестрироваться</button>
+            </div>
+          </form>
+          <p class="mt-20">Уже имеете аккаунт?<a href="{% url "login" %}"> Вход</a></p>
+          <p><a href="{% url "password_reset" %}"> Забыли свой пароль?</a></p>
+          <p>Вы можете зарегестрироваться  с помощью:</p>
+            <a href="{% url "social:begin" 'google-oauth2' %}">
+            <img src="{% static "images/google.png" %}"   alt="">
+            </a>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+  {% endblock main %}

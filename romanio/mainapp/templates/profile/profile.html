@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block main %}
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<ol class="breadcrumb">
+						<li><a href="{% url 'home' %}">Главная</a></li>
+						<li class="active"> Личный кабинет</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+          <li><a href="{% url 'profile_update' user.pk %}">Изменить профиль</a></li>
+          <li><a href="{% url "password_change" %}">Изменить пароль</a></li>
+          <li><a class="active"  href="{% url 'profile' %}">Профиль</a></li>
+        </ul>
+        <div class="dashboard-wrapper dashboard-user-profile">
+          <div class="media">
+            <div class="pull-left text-center" href="#!">
+              <img class="media-object user-img" src="{% static "images/profile.png" %}" alt="Image">
+              
+            </div>
+            <div class="media-body" style="width: 500px;">
+              <ul class="user-profile-list">
+
+              
+                <li><span>Логин:</span>{{ user.username }}</li>
+                <li><span>Имя:</span>{{ user.first_name }}</li>
+                <li><span>Фамилия:</span>{{ user.last_name }}</li>
+                {% if user.coop_name %}
+                <li><span>Организация:</span>{{ user.coop_name }}</li>
+                {% endif %}
+                <li><span>Эл. адрес:</span>{{ user.email }}</li>
+                <li><span>Телефон:</span>{{ user.phone_number }}</li>
+              </ul>
+            </div>
+            <!-- <div class="media-body text-center" style="width: 500px; padding: 30px;  "> 
+              <div class="form-group">
+               <h5 style="font-weight: bold;color: ;">Для того, чтобы Вы могли заказать нашн продукцию, введите номер мобильного телефона.</h5>
+                <input type="" class="form-control" placeholder="Номер">
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

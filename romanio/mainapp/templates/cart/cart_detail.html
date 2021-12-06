@@ -1,0 +1,111 @@
+{% extends 'index.html' %}
+
+
+{% block main %}
+
+
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Cart</h1>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li class="active">cart</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<div class="page-wrapper">
+  <div class="cart shopping">
+    <div class="container">
+      <div class="row">
+        {% if cart %}   
+        <div class="col-md-8 col-md-offset-2">
+          <div class="block">
+            <div class="product-list">
+                <table class="table">
+                  <thead>
+                    <tr style="font-size:16px;">
+                      <th class="">Название</th>
+                      <th class="">Цена</th>
+                      <th class="">Количество</th>
+                      <th class="">Действие</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in cart %}
+                    {% with product=item.product  %}
+                    <tr class="">
+                      <td class="">
+                        <div class="product-info">
+                          <img width="80" src="{{product.image.url}}" alt="" />
+                          <a href="#!">{{ product.title }}</a>
+                        </div>
+                      </td>
+                      <td class="">{{item.price}}</td>
+                       <td>
+                        
+                        <a id="hide"  type="button" data-toggle="collapse" data-target="#collapseExample-{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample">
+                           {{item.quantity}} шт.<p style="color:gray">изменить?</p>
+                        </a>
+                        </p>
+                        <div class="collapse" id="collapseExample-{{forloop.counter}}">
+                          <form action="{% url 'cart_update' product.id %}" method="post">
+                            {% csrf_token %}
+
+                            {{cart_product_form.quantity}}
+                            <button type="submit" class="tf-ion-android-done" ></button>
+                          </form>
+                        </div>
+                       </td>
+
+                      <td class="">
+                        <a class="product-remove" href="{% url 'cart_remove' product.id %}">Удалить</a>
+                        
+                      </td>
+                    </tr>
+                    {% endwith %}
+                  {% endfor %}
+                    
+                  </tbody>
+                    <tr>
+                      <th style="font-size:17px">Итого:</th>
+                      <th></th>
+                      <th></th>
+                      <th>{{cart.get_total_price}}</th>
+                    </tr>
+                </table>
+                <a href="{% url 'create_order' %}" class="btn btn-main pull-right">Заказать</a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <section class="empty-cart page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+        	<i class="tf-ion-ios-cart-outline"></i>
+          	<h1 class="text-center">Ваша корзина пуста.</h1>
+          
+          	<a href="{% url 'home' %}" class="btn btn-main mt-20">За покупками!</a>
+      </div>
+    </div>
+  </div>
+</section>
+        {% endif %}    
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock main %}

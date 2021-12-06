@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+
+
+{% load static %}
+
+
+{% block main %}
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <a class="logo" href="index.html">
+            <img src="images/logo.png" alt="">
+          </a>
+          <h2 class="text-center">Добро Пожаловать</h2>
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger alert-common" role="alert">
+            <i class="tf-ion-close-circled"></i> {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+          <form class="text-left clearfix" action="" method="post" >
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Логин" {{form.username}}
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="password-input" placeholder="Пароль"{{form.password}}
+            </div>
+             <div class="form-group">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" style="font-weight:100; font-size:13px" for="flexCheckDefault">
+                Показать пароль? 
+              </label>
+             </div>
+            <div class="text-center">
+              </label>
+              <button type="submit" class="btn btn-main text-center" >Войти</button>
+            </div>
+          </form>
+          <p class="mt-20">Впервые на нашем сайте?<a href="{% url "signin" %}"> Создайте новый аккаунт</a></p>
+          <p><a href="{% url "password_reset" %}">Восстановить пароль</a></p>
+          <p>Вы можете авторизироваться с помощью:</p>
+            <a href="{% url "social:begin" 'google-oauth2' %}">
+            <img src="{% static "images/google.png" %}"   alt="">
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main %}

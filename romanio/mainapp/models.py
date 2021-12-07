@@ -44,7 +44,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     
-    category = models.ForeignKey(Category,verbose_name="Категория", null=True, blank=True, related_name='entries', related_query_name='tag', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,verbose_name="Категория", on_delete=models.CASCADE)
     title = models.CharField(max_length=50, verbose_name="Подкатегория")
     slug = models.SlugField(max_length=50, unique=True)
     
@@ -56,7 +56,7 @@ class SubCategory(models.Model):
         verbose_name_plural = 'Подкатегории'
 
     def get_absolute_url(self):
-        return reverse('subcategory',  kwargs={"slug_subcategory":self.slug, "subslug_category":self.category.slug})
+        return reverse('subcategory',  kwargs={"slug_subcategory":self.slug, "slug_category":self.category.slug})
 
 
 

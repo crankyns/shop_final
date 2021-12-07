@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 
@@ -11,5 +10,5 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('complete_reg/',PhoneAddView.as_view(),{'next_page': settings.LOGIN_REDIRECT_URL}, name='phone_add' ),
     path('contact/',ContactPage.as_view(), name='contact' ),
-    path('catalog/<str:slug_subcategory>/', SubCategoryView.as_view(), name='subcategory')    
+    path('catalog/<str:slug_category>/sub/<str:slug_subcategory>/', SubCategoryView.as_view(), name='subcategory')    
 ]

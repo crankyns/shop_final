@@ -9,7 +9,11 @@
           <h1 class="page-name">Главная</h1>
           <ol class="breadcrumb">
             <li><a href="{% url 'home' %}">Главная</a></li>
-            <li class="active"><a href="{{ categories.get_absolute_url }}">{{ prod.category }}</a></li>
+            <li class="active"><a href="">{{ subcategory_prod.category }}</a></li>
+			{% if subcategory_prod %}
+			<li class="active"<a href="">{{subcategory_prod.subcategory}}</a></li>
+			
+			{% endif %}
           </ol>
         </div>
       </div>
@@ -39,13 +43,14 @@
 					    <div id="collapse-{{forloop.counter}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									{% if category.title == subcategories.category %}
-									{% for cat in subcategories %}	
-											
-									<li><a href="#!">{{ cat.title }}</a></li>
 									
-									{% endfor %}
+									{% for subcat in subcategories %}	
+									{% if category == subcat.category %}
+											
+									<li><a href="{{ subcat.get_absolute_url }}">{{ subcat.title }}</a></li>
+									
 									{% endif %}
+									{% endfor %}
 									
 								</ul>
 							</div>

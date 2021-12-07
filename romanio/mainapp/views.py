@@ -1,5 +1,5 @@
 from django.shortcuts import  get_object_or_404, redirect, render
-from django.views.generic import View, ListView, TemplateView
+from django.views.generic import View, TemplateView
 from cart.forms import CartAddProductForm
 from user.forms import AddPhoneForm
 from user.models import CustomUser
@@ -54,7 +54,7 @@ class CatalogPage(View):
 class SubCategoryView(View):
 
     def get(self, request, *args, **kwargs):
-        products = Product.objects.filter(category__slug=self.kwargs['slug_url'])
+        products = Product.objects.filter(subcategory__slug=self.kwargs['slug_subcategory'])
         paginator = Paginator(products, 1)
 
         page_number = request.GET.get('page')
@@ -63,12 +63,12 @@ class SubCategoryView(View):
         context = {
             "categories": Category.objects.all(),
             "products": products,
-            "prod": Product.objects.filter(category__slug=self.kwargs['slug_url'])[0],
             "cart_product_form": CartAddProductForm,
             "page_obj": page_obj,
-            'subcategory': Product.objects.filter(subcategory__slug=self.kwargs['slug_subcategory'])
+            "subcategories": SubCategory.objects.filter(category_id=F('category__id')),
+            "subcategory_prod": Product.objects.filter(subcategory__slug=self.kwargs['slug_subcategory'])[0]
         }
-        return render(request, "subcategory_catalog.html", context)
+        return render(request, "catalog.html", context)
 
 
 class ProductDetail(TemplateView):

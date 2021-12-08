@@ -9,7 +9,7 @@
           <h1 class="page-name">Главная</h1>
           <ol class="breadcrumb">
             <li><a href="{% url 'home' %}">Главная</a></li>
-            <li class="active"><a href="">{{ subcategory_prod.category }}</a></li>
+            <li class="active"><a href="">{% if subcategory_prod %}{{ subcategory_prod.category }} {% else %} {{prod.category}} {% endif %}</a></li>
 			{% if subcategory_prod %}
 			<li class="active"<a href="">{{subcategory_prod.subcategory}}</a></li>
 			

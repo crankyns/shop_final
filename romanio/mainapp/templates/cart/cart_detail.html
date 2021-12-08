@@ -49,7 +49,7 @@
                           <a href="#!">{{ product.title }}</a>
                         </div>
                       </td>
-                      <td class="">{{item.price}}</td>
+                      <td class="">{{item.price}} BYN</td>
                        <td>
                         
                         <a id="hide"  type="button" data-toggle="collapse" data-target="#collapseExample-{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample">
@@ -79,7 +79,7 @@
                       <th style="font-size:17px">Итого:</th>
                       <th></th>
                       <th></th>
-                      <th>{{cart.get_total_price}}</th>
+                      <th>{{cart.get_total_price}} BYN</th>
                     </tr>
                 </table>
                 <a href="{% url 'create_order' %}" class="btn btn-main pull-right">Заказать</a>

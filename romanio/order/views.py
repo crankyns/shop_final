@@ -10,10 +10,9 @@ from .forms import OrderCreateForm
 class OrderCreate(View):
     
     def get(self, request, *args, **kwargs):
-        context={
-            'form':OrderCreateForm(),
-        }
-        return render(request, 'order/create.html', context)
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return render(request, 'order/create.html', {"form":OrderCreateForm()})
 
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
@@ -23,6 +22,7 @@ class OrderCreate(View):
                                 'city':request.POST['city'],
                                 'postal_code':request.POST['postal_code'],
                                 })
+        print(form.data)
         if form.is_valid():
             order = form.save()
             for item in cart:

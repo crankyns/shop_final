@@ -29,9 +29,7 @@ def cart_remove(request, product_id):
 def cart_update(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    print(product)
     form = CartAddProductForm(request.POST)
-    print(form.is_valid())
     if form.is_valid():
         cart.add(product=product,
                 quantity=form.cleaned_data['quantity'],

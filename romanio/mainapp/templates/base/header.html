@@ -51,7 +51,7 @@
                                     </div>
                                     <h5><strong>{{item.total_price}}</strong></h5>
                                 </div>
-                                <a href="#!" class="remove"><i class="tf-ion-close"></i></a>
+                                <a href="{% url 'cart_remove' product.id %}" class="remove"><i class="tf-ion-close"></i></a>
                             </div>
                             {% endwith %}
                           {% endfor %}

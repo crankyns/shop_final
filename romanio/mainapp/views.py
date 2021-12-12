@@ -30,7 +30,7 @@ class CatalogPage(View):
     
     def get(self,request, *args, **kwargs,):
         
-        products = Product.objects.filter(category__slug=self.kwargs['slug_url'])
+        products = Product.objects.filter(category__slug=self.kwargs['slug_url']).order_by('id')
         paginator = Paginator(products, 2)
 
         page_number = request.GET.get('page')
@@ -41,7 +41,7 @@ class CatalogPage(View):
         context = {
             "categories": Category.objects.all(),
             "products": products,
-            "prod": Product.objects.filter(category__slug=self.kwargs['slug_url'])[0],
+            "prod": Product.objects.filter(category__slug=self.kwargs['slug_url']).first(),
             "cart_product_form": CartAddProductForm,
             "page_obj": page_obj,
             "subcategories": SubCategory.objects.filter(category_id=F('category__id')),
@@ -54,7 +54,7 @@ class CatalogPage(View):
 class SubCategoryView(View):
 
     def get(self, request, *args, **kwargs):
-        products = Product.objects.filter(subcategory__slug=self.kwargs['slug_subcategory'])
+        products = Product.objects.filter(subcategory__slug=self.kwargs['slug_subcategory']).order_by('id')
         paginator = Paginator(products, 1)
 
         page_number = request.GET.get('page')
@@ -86,10 +86,10 @@ class ProductDetail(TemplateView):
 class ProfileView(TemplateView):
 
     def get(self, request, *args, **kwargs):
-        context = {
-            "user":CustomUser.objects.get(username=request.user.username)
-        }
-        return render(request, 'profile/profile.html', context)
+        if not request.user.is_authenticated:
+            return redirect('login')
+        else:
+            return render(request, 'profile/profile.html', {"user":CustomUser.objects.get(username=request.user.username)})
 
 
 class PhoneAddView(View):
